@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Styles pour le timer */     
+        .main{
+          padding: 250px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }   
+        .timer {
+          max-width: 40%;
+          max-height: 40%;
+          font-size: 300px;
+          font-weight: bold;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 400px;
+        }
+
+        .control-timer{
+          position: absolute;
+          font-weight: bold;
+          top:90%;
+        }
+
+        .photo-banner {
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        
+        /* Animate the list items */
+        .photo-banner ul {
+            display: inline-block;
+            animation: scrollBanner 60s linear infinite;
+        }
+        
+        /* Keyframes for the animation */
+        @keyframes scrollBanner {
+            0% {
+                transform: translateX(50%);
+            }
+            100% {
+                transform: translateX(-100%); /* Move left by 100% of container width */
+            }
+        }
+        
+        /* Style individual list items (images) */
+        .photo-banner li {
+            display: inline-block;
+            margin-right: 1000px; /* Adjust spacing between images */
+        }
+        img {
+          border-radius: 50%;
+          padding: 5px;
+          width: 300px;
+        }
+    </style>
+</head>
+<body>
+  <div class="photo-banner">
+    <ul>
+      <li><img src="img/image1.jpg" alt="Image 1"></li>
+      <li><img src="img/image2.jpg" alt="Image 2"></li>
+      <li><img src="img/image3.jpg" alt="Image 3"></li>
+    </ul>
+  </div>
+  <div class="container">
+    <div class="main">
+      <div class="timer">
+        <p id="timer">45:00</p>
+      </div>
+      <div class="control-timer">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="resetTimer()">Reset</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    let timerInterval;
+    let remainingTime = 45 * 60; // 45 minutes in seconds
+    function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+    function resetTimer() {
+        clearInterval(timerInterval);
+        remainingTime = 45 * 60;
+        updateTimer();
+    }
+    function updateTimer() {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        remainingTime--;
+
+        if (remainingTime < 0) {
+            clearInterval(timerInterval);
+            alert("Temps écoulé !");
+            // lancer un son !
+        }
+    }
+  </script>
+</body>
+</html>
