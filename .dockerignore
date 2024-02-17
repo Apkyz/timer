@@ -1,0 +1,20 @@
+# flyctl launch added from .gitignore
+# Python virtual environment
+venv
+
+# Compiled Python files
+**/*.pyc
+
+# Logs
+log
+
+# Environment variables
+**/.env
+
+# IDE files
+**/.idea
+**/.vscode
+
+# Dependency directories
+lib
+fly.toml
