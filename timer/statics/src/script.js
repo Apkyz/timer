@@ -27,7 +27,9 @@ function startTimer() {
 function updateTimer() {
     remainingTime = time - Math.floor((new Date().getTime() - launch_time) / 1000);
     minutes = (remainingTime > 0) ? Math.floor(remainingTime / 60) : Math.ceil(remainingTime / 60);
-    seconds = remainingTime % 60;
+    minutes = (minutes == 0 && remainingTime < 0 ) ? '-'+minutes : minutes;
+    seconds = Math.abs(remainingTime % 60);
+    seconds = (seconds < 10 && seconds > 0) ? '0'+seconds : seconds;
 
     document.getElementById("timer").textContent = `${minutes}:${seconds}`;
     move();
