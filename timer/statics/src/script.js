@@ -1,21 +1,44 @@
 let timerInterval;
 let time = 45*60;
+let launch_time;
 let remainingTime = time; // 45 minutes in seconds
+let finished = false;
+
 function startTimer() {
+    launch_time = new Date().getTime();
+    finished = false;
     clearInterval(timerInterval);
     timerInterval = setInterval(updateTimer, 1000);
 }
+
+// function updateTimer() {
+//     const minutes = Math.floor(remainingTime / 60);
+//     const seconds = remainingTime % 60;
+//     document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+//     remainingTime--;
+//     if (remainingTime  < 0) {
+//         // clearInterval(timerInterval);
+//         // lancer un son !
+//     }
+//     move();
+// }
+
+
 function updateTimer() {
-    const minutes = Math.floor(remainingTime / 60);
-    const seconds = remainingTime % 60;
-    document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-    remainingTime--;
-    if (remainingTime < 0) {
-        clearInterval(timerInterval);
-        // lancer un son !
-    }
+    remainingTime = time - Math.floor((new Date().getTime() - launch_time) / 1000);
+    minutes = (remainingTime > 0) ? Math.floor(remainingTime / 60) : Math.ceil(remainingTime / 60);
+    seconds = remainingTime % 60;
+
+    document.getElementById("timer").textContent = `${minutes}:${seconds}`;
     move();
+
+    if (remainingTime <= 0 && !finished) {
+        finished = true;
+        // lancer un son !
+        
+    }
 }
+
 /* Progress bar */
 function move() {
     var elem = document.getElementById("myBar");   
