@@ -34,7 +34,7 @@ function updateTimer() {
     minutes = (remainingTime > 0) ? Math.floor(remainingTime / 60) : Math.ceil(remainingTime / 60);
     minutes = (minutes == 0 && remainingTime < 0 ) ? '-'+minutes : minutes;
     seconds = Math.abs(remainingTime % 60);
-    seconds = (seconds < 10 && seconds > 0) ? '0'+seconds : seconds;
+    seconds = (seconds < 10 && seconds >= 0) ? '0'+seconds : seconds;
 
     document.getElementById("timer").textContent = `${minutes}:${seconds}`;
     updateProgressBar();
