@@ -4,6 +4,11 @@ let launch_time;
 let remainingTime = time; // 45 minutes in seconds
 let finished = false;
 
+const timerElement = document.getElementById('timer');
+const startButton = document.getElementById('startButton');
+const resetButton = document.getElementById('resetButton');
+const progressBar = document.querySelector('.progress-bar');
+
 function startTimer() {
     launch_time = new Date().getTime();
     finished = false;
@@ -32,33 +37,30 @@ function updateTimer() {
     seconds = (seconds < 10 && seconds > 0) ? '0'+seconds : seconds;
 
     document.getElementById("timer").textContent = `${minutes}:${seconds}`;
-    move();
+    updateProgressBar();
 
     if (remainingTime <= 0 && !finished) {
         finished = true;
-        // lancer un son !
+        timerElement.textContent = 'TIME !';
         
     }
 }
 
-/* Progress bar */
-function move() {
-    var elem = document.getElementById("myBar");   
-    var width = 100;
-    var id = setInterval(frame, 50);
-    function frame() {
-    if (width <= 0) {
-        elem.hidden = true;
-    } else {
-        elem.hidden = false;
-        width = (remainingTime / time) * 100;
-        if (width < 50 && width > 25) {
-            elem.className = "w3-orange";
-            }
-            else if (width < 25) {
-            elem.className = "w3-red";
-            }
-            elem.style.width = width + '%'; 
-        }
+function updateProgressBar() {
+    const percentage = (remainingTime / time) * 100;
+    progressBar.style.width = `${percentage}%`;
+
+    if (percentage < 50 && percentage > 25) {
+      progressBar.className = "progress-bar bg-warning";
     }
-}
+    else if (percentage < 25 && percentage > 0) {
+      progressBar.className = "progress-bar bg-danger";
+    }
+  }
+
+function resetPage(){
+    location.reload();
+  }
+startButton.addEventListener('click', startTimer);
+resetButton.addEventListener('click', resetPage);
+
